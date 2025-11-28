@@ -73,3 +73,21 @@ test("handles very precise input values", () => {
   const result = convert("distance", 1.234567, "km", "mi");
   strictEqual(result, 0.77); // Should round to config precision
 });
+
+test("temperature conversion with Kelvin respects precision", () => {
+  const result = convert("temperature", 300, "K", "F");
+  const expected = 80.33; // (300 - 273.15) * 9/5 + 32 = 80.33
+  strictEqual(result, expected, "Kelvin conversion should respect precision");
+});
+
+test("distance conversion with meters respects precision", () => {
+  const result = convert("distance", 5000, "m", "mi");
+  const expected = 3.11; // 5000 * 0.000621371 = 3.106855, rounded to 2 decimals
+  strictEqual(result, expected, "Meters conversion should respect precision");
+});
+
+test("weight conversion with pounds respects precision", () => {
+  const result = convert("weight", 1, "lb", "oz");
+  const expected = 16.0; // Exact conversion
+  strictEqual(result, expected, "Pounds conversion should respect precision");
+});
